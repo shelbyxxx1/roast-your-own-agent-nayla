@@ -12,6 +12,9 @@ def main():
         os.makedirs(output_dir, exist_ok=True)
         output_path = Path(output_dir) / "entry.txt"
         output_path.write_text(ROAST + "\n", encoding="utf-8")
+        written = output_path.read_text(encoding="utf-8")
+        if written != ROAST + "\n" or written.count("\n") != 1 or not 1 <= len(written[:-1]) <= 200:
+            raise ValueError("output validation failed")
     except Exception as error:
         print(error, file=sys.stderr)
         return 1
